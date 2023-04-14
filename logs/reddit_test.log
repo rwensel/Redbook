@@ -1,0 +1,55 @@
+2023-04-14 12:42:06,721 INFO Script started at 2023-04-14 12:42:06.721820
+2023-04-14 12:42:06,721 DEBUG Using proactor: IocpProactor
+2023-04-14 12:42:06,723 INFO Retrieved top posts from subreddit meme
+2023-04-14 12:42:06,723 DEBUG Fetching: GET https://oauth.reddit.com/r/meme/top
+2023-04-14 12:42:06,723 DEBUG Data: None
+2023-04-14 12:42:06,723 DEBUG Params: {'t': 'day', 'limit': '100', 'raw_json': 1}
+2023-04-14 12:42:06,733 INFO Retrieved top posts from subreddit dankmemes
+2023-04-14 12:42:06,733 DEBUG Fetching: GET https://oauth.reddit.com/r/dankmemes/top
+2023-04-14 12:42:06,733 DEBUG Data: None
+2023-04-14 12:42:06,734 DEBUG Params: {'t': 'day', 'limit': '100', 'raw_json': 1}
+2023-04-14 12:42:06,734 INFO Retrieved top posts from subreddit funny
+2023-04-14 12:42:06,734 DEBUG Fetching: GET https://oauth.reddit.com/r/funny/top
+2023-04-14 12:42:06,734 DEBUG Data: None
+2023-04-14 12:42:06,734 DEBUG Params: {'t': 'day', 'limit': '100', 'raw_json': 1}
+2023-04-14 12:42:07,439 DEBUG Response: 200 (51908 bytes)
+2023-04-14 12:42:07,453 WARNING Post 12l5smt is not an image file
+2023-04-14 12:42:07,454 WARNING Post 12kx2z5 is not an image file
+2023-04-14 12:42:07,454 WARNING Post 12lfex9 is not an image file
+2023-04-14 12:42:07,454 WARNING Post 12lqomz is not an image file
+2023-04-14 12:42:07,522 DEBUG Response: 200 (49021 bytes)
+2023-04-14 12:42:07,551 DEBUG Response: 200 (64564 bytes)
+2023-04-14 12:42:07,593 WARNING Could not detect image format for post 12lr53e
+2023-04-14 12:42:07,593 WARNING Post 12le0ym is not an image file
+2023-04-14 12:42:07,609 WARNING Post 12lls5b is not an image file
+2023-04-14 12:42:07,609 WARNING Post 12kx26y is not an image file
+2023-04-14 12:42:07,609 WARNING Post 12lqpl9 is not an image file
+2023-04-14 12:42:07,677 WARNING Post 12kzsfd is not an image file
+2023-04-14 12:42:07,677 WARNING Post 12lpxak is not an image file
+2023-04-14 12:42:07,677 WARNING Post 12lrou9 is not an image file
+2023-04-14 12:42:07,677 WARNING Post 12lx2ci is not an image file
+2023-04-14 12:42:07,677 WARNING Post 12lcy59 is not an image file
+2023-04-14 12:42:07,677 WARNING Post 12ltsfg is not an image file
+2023-04-14 12:42:07,709 WARNING Post 12lqfb6 is not an image file
+2023-04-14 12:42:07,709 WARNING Post 12ls2in is not an image file
+2023-04-14 12:42:07,727 WARNING Post 12ltiz8 is not an image file
+2023-04-14 12:42:07,727 WARNING Post 12lwag3 is not an image file
+2023-04-14 12:42:07,727 WARNING Post 12kvohq is not an image file
+2023-04-14 12:42:07,753 WARNING Post 12lunfi is not an image file
+2023-04-14 12:42:07,858 WARNING Post 12ltihg is not an image file
+2023-04-14 12:42:07,922 WARNING Post 12lbyd0 is not an image file
+2023-04-14 12:42:07,922 WARNING Post 12lcmjl is not an image file
+2023-04-14 12:42:08,060 WARNING Could not detect image format for post 12laq91
+2023-04-14 12:42:08,102 WARNING Could not detect image format for post 12lrsfi
+2023-04-14 12:42:08,194 WARNING Post 12kyf4v is not an image file
+2023-04-14 12:42:08,234 WARNING Post 12lymed is not an image file
+2023-04-14 12:42:08,281 WARNING Post 12kve23 is not an image file
+2023-04-14 12:42:08,320 WARNING Post 12lqk1o is not an image file
+2023-04-14 12:42:08,524 INFO Saved post metadata to database for subreddit meme
+2023-04-14 12:42:08,619 INFO Saved post metadata to database for subreddit funny
+2023-04-14 12:42:08,839 WARNING Post 12luu0x is not an image file
+2023-04-14 12:42:08,933 WARNING Could not detect image format for post 12l4ejr
+2023-04-14 12:42:08,933 WARNING Post 12m0a1x is not an image file
+2023-04-14 12:42:09,477 WARNING Could not detect image format for post 12l3zz3
+2023-04-14 12:42:09,634 INFO Saved post metadata to database for subreddit dankmemes
+2023-04-14 12:42:09,635 INFO Script finished at 2023-04-14 12:42:09.635504

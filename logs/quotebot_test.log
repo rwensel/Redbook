@@ -1,0 +1,5 @@
+2023-04-14 12:43:17,946 INFO Script started at 2023-04-14 12:43:17.946723
+2023-04-14 12:43:17,947 DEBUG Using proactor: IocpProactor
+2023-04-14 12:43:17,950 DEBUG Starting new HTTPS connection (1): graph.facebook.com:443
+2023-04-14 12:43:19,106 DEBUG https://graph.facebook.com:443 "POST /v3.0/me/feed HTTP/1.1" 200 40
+2023-04-14 12:43:19,107 INFO Next post in 60 minutes

@@ -1,0 +1,9 @@
+2023-04-14 12:43:14,526 INFO Script started at 2023-04-14 12:43:14.526816
+2023-04-14 12:43:14,526 DEBUG Using proactor: IocpProactor
+2023-04-14 12:43:14,578 DEBUG Starting new HTTPS connection (1): i.redd.it:443
+2023-04-14 12:43:14,614 DEBUG https://i.redd.it:443 "GET /u506ewnfvwta1.png HTTP/1.1" 200 836432
+2023-04-14 12:43:14,646 DEBUG Starting new HTTPS connection (1): graph.facebook.com:443
+2023-04-14 12:43:18,763 DEBUG https://graph.facebook.com:443 "POST /v3.0/me/photos HTTP/1.1" 200 68
+2023-04-14 12:43:18,763 INFO Post succeeded: 12m1bx5
+2023-04-14 12:43:18,770 INFO Updated post status for id: 12m1bx5
+2023-04-14 12:43:18,770 INFO Waiting for 30 minutes before the next check

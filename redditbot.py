@@ -32,35 +32,37 @@ except Exception as e:
     logging.error('Error connecting to Reddit API: {}'.format(e))
     reddit = None
 
+subreddit_names = ['meme', 'dankmemes', 'funny']
+
 if reddit is not None:
     while True:
 
-        # retrieve top posts of the day from the custom feed
-        try:
-            subreddit = reddit.subreddit('meme')
-            top_posts = subreddit.top(time_filter='day', limit=100)
-            logging.info('Retrieved top posts from subreddit')
-        except Exception as e:
-            logging.error('Error retrieving top posts: {}'.format(e))
+        # retrieve top posts of the day from each subreddit in the list
+        for subreddit_name in subreddit_names:
+            try:
+                subreddit = reddit.subreddit(subreddit_name)
+                top_posts = subreddit.top(time_filter='day', limit=100)
+                logging.info('Retrieved top posts from subreddit {}'.format(subreddit_name))
 
-        # filter posts that don't meet requirements
-
-        filtered_posts = []
-        for post in top_posts:
-            if post.score >= 50 and time.time() - post.created_utc <= 86400:
-                # check if URL ends with a recognized image format
-                if post.url.endswith(('.jpg', '.jpeg', '.png', '.gif')):
-                    try:
-                        # download image file using requests
-                        response = requests.get(post.url)
-                        if imghdr.what(None, h=response.content) is not None:
-                            filtered_posts.append(post)
+                # filter posts that meet requirements
+                filtered_posts = []
+                for post in top_posts:
+                    if not post.over_18 and post.score >= 50 and time.time() - post.created_utc <= 86400:
+                        # check if URL ends with a recognized image format
+                        if post.url.endswith(('.jpg', '.jpeg', '.png', '.gif')):
+                            try:
+                                # download image file using requests
+                                response = requests.get(post.url)
+                                if imghdr.what(None, h=response.content) is not None:
+                                    filtered_posts.append(post)
+                                else:
+                                    logging.warning('Could not detect image format for post {}'.format(post.id))
+                            except Exception as e:
+                                logging.warning('Could not download image for post {}: {}'.format(post.id, e))
                         else:
-                            logging.warning('Could not detect image format for post {}'.format(post.id))
-                    except Exception as e:
-                        logging.warning('Could not download image for post {}: {}'.format(post.id, e))
-                else:
-                    logging.warning('Post {} is not an image file'.format(post.id))
+                            logging.warning('Post {} is not an image file'.format(post.id))
+            except Exception as e:
+                logging.error('Error retrieving top posts from subreddit {}: {}'.format(subreddit_name, e))
 
         # save post metadata into a local sqlite db
         try:
@@ -69,20 +71,22 @@ if reddit is not None:
 
             c.execute('''CREATE TABLE IF NOT EXISTS posts
                          (id TEXT PRIMARY KEY,
-                          url TEXT,
+                          permalink TEXT,
                           title TEXT,
                           author TEXT,
                           ups INTEGER,
-                          downs INTEGER,
                           created_utc INTEGER,
                           image_link TEXT,
                           indexed_time INTEGER,
                           posted INTEGER)''')
 
             for post in filtered_posts:
-                c.execute("INSERT OR IGNORE INTO posts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                          (post.id, post.url, post.title, post.author.name, post.ups, post.downs, post.created_utc, post.url,
-                           int(time.time()), 0))
+                c.execute("INSERT OR IGNORE INTO posts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                          (
+                              post.id, 'reddit.com{}'.format(post.permalink), post.title, post.author.name, post.ups,
+                              post.created_utc,
+                              post.url,
+                              int(time.time()), 0))
 
             conn.commit()
             conn.close()
@@ -92,4 +96,4 @@ if reddit is not None:
 
         # log the end time
         logging.info('Script finished at {}'.format(datetime.now()))
-        time.sleep(3600)
+        time.sleep(1800)

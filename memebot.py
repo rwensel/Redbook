@@ -3,8 +3,9 @@ import os
 import sqlite3
 import time
 from datetime import datetime
-import requests
+
 import facebook
+import requests
 from dotenv import load_dotenv
 
 # load environment variables from .env file
@@ -63,19 +64,24 @@ if graph is not None:
         c.execute('SELECT * FROM posts WHERE posted = 0 ORDER BY RANDOM() LIMIT 1')
         row = c.fetchone()
 
+        # count the number of unposted rows
+        c.execute('SELECT COUNT(*) FROM posts WHERE posted = 0')
+        unposted_count = c.fetchone()[0]
+
         # post the data to Facebook
         if row is not None:
             try:
                 # download image from URL
-                image_url = row[7]
+                image_url = row[6]
                 if not image_url.startswith('http'):
                     image_url = 'http://' + image_url
                 image_data = requests.get(image_url).content
 
                 # create post message with image attachment
-                message = '{} by {} - {} upvotes, {} downvotes\nposted on {}\nFTCMemeBot says:  See you in ' \
-                          'an hour for the next meme! BleepBloopBlop'.format(row[2], row[3], row[4], row[5],
-                                                                             datetime.fromtimestamp(row[6]))
+                message = "{}\nby {} : {} upvotes, posted on {}\n{} - original link\nFTCMemeBot says: " \
+                          "I have {} memes left to post! Come back in a half hour for the next one!" \
+                          "BleepBloopBlop".format(row[2], row[3], row[4], datetime.fromtimestamp(row[5]),
+                                                  row[1], (unposted_count - 1))
                 # upload image to Facebook album
                 album_id = '{}/photos'.format(os.environ['FACEBOOK_ALBUM_ID'])
                 image_upload = graph.put_photo(image=image_data, album_id=album_id, message=message)
@@ -92,5 +98,5 @@ if graph is not None:
 
         conn.close()
 
-        # wait for an hour
-        time.sleep(3600)
+        # wait for .5 hours
+        time.sleep(1800)
