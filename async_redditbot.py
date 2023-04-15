@@ -17,7 +17,7 @@ REDDIT_CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
 REDDIT_USER_AGENT = os.getenv('REDDIT_USER_AGENT')
 
 # set up logging
-log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'reddit_test.log')
+log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'reddit.log')
 logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
 # log the start time
@@ -56,7 +56,7 @@ async def process_subreddit(subreddit_name):
 
         # save post metadata into a local sqlite db
         try:
-            conn = sqlite3.connect(os.environ['DATABASE_NAME_test'])
+            conn = sqlite3.connect(os.environ['DATABASE_NAME'])
             c = conn.cursor()
 
             c.execute('''CREATE TABLE IF NOT EXISTS posts

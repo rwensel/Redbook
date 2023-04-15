@@ -11,12 +11,12 @@ import facebook
 
 load_dotenv()
 
-log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'memebot_test.log')
+log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'memebot.log')
 logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
 logging.info('Script started at {}'.format(datetime.now()))
 
-DATABASE_NAME = os.getenv('DATABASE_NAME_test')
+DATABASE_NAME = os.getenv('DATABASE_NAME')
 
 
 async def post_to_facebook(row):
@@ -35,9 +35,9 @@ async def post_to_facebook(row):
                 image_url = 'http://' + image_url
 
             image_data = requests.get(image_url).content
-            message = "dev_test:{} upvotes, posted on {}\n{} - original link\nFTCMemeBot says: " \
-                      "I have {} memes left to post! Come back in 30 minutes for the next one!" \
-                      "BleepBloopBlop".format(row[4], datetime.fromtimestamp(row[5]),
+            message = "{} upvotes, posted on {}\n{} - original link\n" \
+                      "I have {} memes left! Come back in 30 minutes for the next one!" \
+                      "".format(row[4], datetime.fromtimestamp(row[5]),
                                               row[1], (unposted_count - 1))
             album_id = '{}/photos'.format(os.environ['FACEBOOK_ALBUM_ID'])
             graph.put_photo(image=image_data, album_id=album_id, message=message)

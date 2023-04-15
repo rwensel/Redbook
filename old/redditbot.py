@@ -16,7 +16,7 @@ REDDIT_CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
 REDDIT_USER_AGENT = os.getenv('REDDIT_USER_AGENT')
 
 # set up logging
-log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'reddit.log')
+log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'reddit.log')
 logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
 # log the start time

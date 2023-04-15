@@ -12,7 +12,7 @@ from facebook import GraphAPI, GraphAPIError
 load_dotenv()
 
 # set up logging
-log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'quotebot.log')
+log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'quotebot.log')
 logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
 # Set up Facebook Graph API connection
@@ -76,7 +76,7 @@ def get_random_quote(filename, selected_quotes):
 
 # Define a function to post a message with a random quote
 def post_random_quote(selected_quotes):
-    quote, selected_quotes = get_random_quote('.\\files\\quotes.csv', selected_quotes)
+    quote, selected_quotes = get_random_quote('../files/quotes.csv', selected_quotes)
     if 'quote' in quote and 'author' in quote:
         message = f"{quote['quote']} - {quote['author']:}\n\nFTCQuoteBot says: See you in an hour for the next quote! BleepBloopBlop"
         try:
@@ -97,7 +97,7 @@ while True:
             # Load the list of selected quotes from the previous runs
             selected_quotes = []
             try:
-                with open('.\\files\\selected_quotes.txt', 'r') as f:
+                with open('../files/selected_quotes.txt', 'r') as f:
                     data = f.read()
                     if data:
                         selected_quotes = json.loads(data)
@@ -110,7 +110,7 @@ while True:
             selected_quotes = post_random_quote(selected_quotes)
 
             # Save the updated list of selected quotes to a file
-            with open('.\\files\\selected_quotes.txt', 'w') as f:
+            with open('../files/selected_quotes.txt', 'w') as f:
                 f.write(json.dumps(selected_quotes))
     logging.info("Waiting for 60 minutes before next test.")
     time.sleep(3600)

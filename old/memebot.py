@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # set up logging
-log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'memebot.log')
+log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../logs', 'memebot.log')
 logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
 # set up Facebook connection

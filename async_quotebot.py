@@ -13,7 +13,7 @@ load_dotenv()
 
 FACEBOOK_ACCESS_TOKEN = os.getenv('FACEBOOK_ACCESS_TOKEN')
 
-log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'quotebot_test.log')
+log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'quotebot.log')
 logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 logging.info('Script started at {}'.format(datetime.now()))
 
@@ -35,15 +35,15 @@ def get_random_quote(filename, selected_quotes):
 
 async def post_random_quote(filename, selected_quotes):
     quote, selected_quotes = get_random_quote(filename, selected_quotes)
-    message = f"dev_test:{quote['quote']} - {quote['author']}"
+    message = f"{quote['quote']} - {quote['author']}"
     graph.put_object(parent_object='me', connection_name='feed', message=message)
     return selected_quotes
 
 
 async def main_loop_quote():
     selected_quotes = []
-    csv_file = '.\\files\\quotes_test.csv'
-    sq_file = '.\\files\\selected_quotes_test.txt'
+    csv_file = '.\\files\\quotes.csv'
+    sq_file = '.\\files\\selected_quotes.txt'
     posting_interval_minutes = 60
 
     # Read selected quotes from file, if it exists
