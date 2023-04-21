@@ -20,13 +20,14 @@ DATABASE_NAME = os.getenv('DATABASE_NAME')
 
 
 async def post_to_facebook(row):
-    graph = facebook.GraphAPI(access_token=os.environ['FACEBOOK_ACCESS_TOKEN'], version='3.0')
+    graph = facebook.GraphAPI(access_token=os.environ['FACEBOOK_PAGE_TOKEN'], version='3.0')
 
-    # count the number of unposted rows
+    # count the number of un-posted rows
+    # un-posted_count = c.fetchone()[0]
+
     conn = sqlite3.connect(DATABASE_NAME)
     c = conn.cursor()
     c.execute('SELECT COUNT(*) FROM posts WHERE posted = 0')
-    unposted_count = c.fetchone()[0]
 
     if graph is not None:
         try:
@@ -35,11 +36,20 @@ async def post_to_facebook(row):
                 image_url = 'http://' + image_url
 
             image_data = requests.get(image_url).content
-            message = "{} upvotes, posted on {}\n{} - original link\n" \
-                      "I have {} memes left! Come back in 30 minutes for the next one!" \
-                      "".format(row[4], datetime.fromtimestamp(row[5]),
-                                              row[1], (unposted_count - 1))
-            album_id = '{}/photos'.format(os.environ['FACEBOOK_ALBUM_ID'])
+            if "r/ProgrammerHumor" in row[1]:
+                message = "{}\n#ProgrammerHumor \n#CodeLife \n#ProgrammingMemes \n#GeekHumor \n#TechLaughs \n#ITJokes " \
+                          "\n#DebuggingLife \n#NerdLaughs \n#CodeJokes \n#SoftwareHumor \n#DevLife " \
+                          "\n#ProgrammingProblems \n#HackerHumor \n#ByteJokes \n#MemeCode \n#LaughingCode " \
+                          "\n#ProgrammingLaughs \n#CodeMemes \n#TechHumor \n#ComputingLaughs".format(row[2])
+            else:
+                message = "{}\n#RelatableMemes \n#FunnyMemes \n#MemeLife \n#HilariousMemes \n#MemeHumor " \
+                          "\n#LaughOutLoud \n#MemeJunkie \n#MemeAddict \n#MemeOfTheDay \n#SillyMemes \n#MemeVibes " \
+                          "\n#DailyLaughs \n#HumorousMemes \n#MemeTime \n#MemeQueen \n#JokesOnJokes \n#MemeCentral " \
+                          "\n#MemeCulture \n#MemeWar \n#MemeWorld \n#funnymemes \n#hilarious \n#memesdaily \n#jokes " \
+                          "\n#laughoutloud \n#humor \n#funnyaf \n#memesarelife \n#memeoftheday \n#lmao \n#rofl " \
+                          "\n#sillymemes \n#jokester \n#memeaddict \n#comedygold \n#memesfordays \n#jokeoftheday " \
+                          "\n#haha \n#memesmakemelaugh \n#dailymemes".format(row[2])
+            album_id = 'me/photos'
             graph.put_photo(image=image_data, album_id=album_id, message=message)
             logging.info(f"Post succeeded: {row['id']}")
             return True
@@ -60,7 +70,7 @@ async def check_and_update_posts():
     c = conn.cursor()
     c.row_factory = sqlite3.Row
 
-    c.execute('SELECT * FROM posts WHERE posted = 0 AND created_utc < ? ORDER BY created_utc DESC', (datetime.now() - timedelta(minutes=15),))
+    c.execute('SELECT * FROM posts WHERE posted = 0 ORDER BY RANDOM() LIMIT 1')
     rows = c.fetchall()
 
     async with aiohttp.ClientSession() as session:
@@ -74,8 +84,8 @@ async def check_and_update_posts():
                 logging.warning('Image not available for id: {}'.format(row['id']))
 
     conn.close()
-    logging.info('Waiting for 30 minutes before the next check')
-    await asyncio.sleep(1800) # Wait for 30 minutes before checking for the next unposted meme
+    logging.info('Waiting for 15 minutes before the next check')
+    await asyncio.sleep(900) # Wait for 15 minutes before checking for the next unposted meme
 
 
 async def main_loop_meme():
