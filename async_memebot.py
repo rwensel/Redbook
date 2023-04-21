@@ -43,12 +43,12 @@ async def post_to_facebook(row):
                           "\n#ProgrammingLaughs \n#CodeMemes \n#TechHumor \n#ComputingLaughs".format(row[2])
             else:
                 message = "{}\n#RelatableMemes \n#FunnyMemes \n#MemeLife \n#HilariousMemes \n#MemeHumor " \
-                          "\n#LaughOutLoud \n#MemeJunkie \n#MemeAddict \n#MemeOfTheDay \n#SillyMemes \n#MemeVibes " \
-                          "\n#DailyLaughs \n#HumorousMemes \n#MemeTime \n#MemeQueen \n#JokesOnJokes \n#MemeCentral " \
-                          "\n#MemeCulture \n#MemeWar \n#MemeWorld \n#funnymemes \n#hilarious \n#memesdaily \n#jokes " \
-                          "\n#laughoutloud \n#humor \n#funnyaf \n#memesarelife \n#memeoftheday \n#lmao \n#rofl " \
-                          "\n#sillymemes \n#jokester \n#memeaddict \n#comedygold \n#memesfordays \n#jokeoftheday " \
-                          "\n#haha \n#memesmakemelaugh \n#dailymemes".format(row[2])
+                          "\n#MemeJunkie \n#MemeAddict \n#MemeOfTheDay \n#SillyMemes \n#MemeVibes " \
+                          "\n#DailyLaughs \n#HumorousMemes \n#MemeTime \n#MemeCentral " \
+                          "\n#MemeCulture \n#MemeWar \n#MemeWorld \n#funnymemes \n#memesdaily " \
+                          "\n#humor \n#funnyaf \n#memesarelife \n#memeoftheday \n#rofl " \
+                          "\n#sillymemes \n#memeaddict \n#comedygold \n#memesfordays " \
+                          "\n#haha \n#dailymemes".format(row[2])
             album_id = 'me/photos'
             graph.put_photo(image=image_data, album_id=album_id, message=message)
             logging.info(f"Post succeeded: {row['id']}")
