@@ -13,5 +13,8 @@ MODEL_ENGINE = os.getenv('MODEL_ENGINE')
 
 # fb.post_to_facebook(DATABASE_NAME, FACEBOOK_ACCESS_TOKEN, 'quotes')
 # fb.post_to_facebook(DATABASE_NAME, FACEBOOK_ACCESS_TOKEN, 'memes')
-# fb.get_all_posts(DATABASE_NAME, FACEBOOK_PAGE_ID, FACEBOOK_ACCESS_TOKEN)
-fb.get_all_post_comments(DATABASE_NAME, FACEBOOK_ACCESS_TOKEN)
+
+while True:
+    fb.get_all_posts(DATABASE_NAME, FACEBOOK_PAGE_ID, FACEBOOK_ACCESS_TOKEN)
+    fb.get_all_post_comments(DATABASE_NAME, FACEBOOK_ACCESS_TOKEN)
+    fb.reply_to_comments(DATABASE_NAME, FACEBOOK_ACCESS_TOKEN, MODEL_ENGINE, OPEN_AI_API)

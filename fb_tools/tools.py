@@ -1,4 +1,3 @@
-import os
 import re
 import sqlite3
 
@@ -101,7 +100,6 @@ def get_all_comments(database_name, post_id, access_token):
                       '?, ?, ?)',
                       (comment_id, post_id, message, created_time, int(time.time())))
             conn.commit()
-
     conn.close()
 
 
@@ -177,7 +175,7 @@ def get_all_post_comments(database_name, access_token):
     conn.close()
 
 
-def reply_to_comments(database_name, access_token):
+def reply_to_comments(database_name, access_token, model, openai_api):
     """
     Iterate through the comments table in the database and use Facebook API to reply to each comment with a completed
     status of 0. Once the comment has been successfully replied to, mark the completed column in the database with 1.
@@ -185,6 +183,8 @@ def reply_to_comments(database_name, access_token):
     Parameters:
         access_token (str): The access token to use for the Graph API.
         database_name (str): Path to the application db.
+        model (str): OpenAI chat completion model.
+        openai_api (str): OpenAi API Key.
 
     Returns:
         None
@@ -193,8 +193,9 @@ def reply_to_comments(database_name, access_token):
     conn = sqlite3.connect(database_name)
     c = conn.cursor()
 
-    c.execute('SELECT comment_id, message FROM comments WHERE completed = 0')
-    openai.api_key = os.environ['OPEN_AI_API']
+    c.execute('SELECT comment_id, message FROM fb_comments WHERE completed = 0 and (message LIKE \'[Question]%\' OR '
+              'message LIKE \'[Image]%\')')
+    openai.api_key = openai_api
     graph = facebook.GraphAPI(access_token)
 
     for row in c.fetchall():
@@ -214,10 +215,10 @@ def reply_to_comments(database_name, access_token):
             if image:
                 reply = image['data'][0]['url']
 
-        if message.lowercase.startswith('[Question]'):
+        if message.startswith('[Question]'):
             message = message[11:]  # remove the first 11 characters
             completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+                model=model,
                 messages=[
                     {"role": "user", "content": message}
                 ]
@@ -229,9 +230,9 @@ def reply_to_comments(database_name, access_token):
         if reply is not None:
             graph.put_comment(comment_id, 'DEV: {}'.format(reply))
             print('Reply to comment {}\nQ:{}\nA:{}'.format(comment_id, message, reply))
-            c.execute('UPDATE comments SET completed = 1 WHERE comment_id = ?', (comment_id,))
+            c.execute(f'UPDATE fb_comments SET completed = 1, postedOn = {int(time.time())} WHERE comment_id = ? and '
+                      f'message = ?', (comment_id, row[1]))
             conn.commit()
-
     conn.close()
 
 
@@ -264,7 +265,7 @@ def post_to_facebook(database_name, access_token, table):
 
             image_data = requests.get(image_url).content
             if "r/ProgrammerHumor" in row[0][1]:
-                message = "{}\n#ProgrammerHumor \n#CodeLife \n#ProgrammingMemes \n#GeekHumor \n#TechLaughs \n#ITJokes " \
+                message = "{}\n#ProgrammerHumor \n#CodeLife \n#ProgrammingMemes \n#GeekHumor \n#TechLaughs " \
                           "\n#DebuggingLife \n#NerdLaughs \n#CodeJokes \n#SoftwareHumor \n#DevLife " \
                           "\n#ProgrammingProblems \n#HackerHumor \n#ByteJokes \n#MemeCode \n#LaughingCode " \
                           "\n#ProgrammingLaughs \n#CodeMemes \n#TechHumor \n#ComputingLaughs".format(row[0][2])
