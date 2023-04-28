@@ -8,26 +8,12 @@ from datetime import datetime
 
 import aiohttp
 import asyncpraw
-from dotenv import load_dotenv
-
-load_dotenv()
-
-REDDIT_CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
-REDDIT_CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
-REDDIT_USER_AGENT = os.getenv('REDDIT_USER_AGENT')
-
-# set up logging
-log_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs', 'reddit.log')
-logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
-
-# log the start time
-logging.info('Script started at {}'.format(datetime.now()))
 
 
-async def process_subreddit(subreddit_name):
-    async with asyncpraw.Reddit(user_agent=REDDIT_USER_AGENT,
-                                client_id=REDDIT_CLIENT_ID,
-                                client_secret=REDDIT_CLIENT_SECRET) as reddit:
+async def process_subreddit(subreddit_name, reddit_user_agent,reddit_client_id,reddit_client_secret):
+    async with asyncpraw.Reddit(user_agent=reddit_user_agent,
+                                client_id=reddit_client_id,
+                                client_secret=reddit_client_secret) as reddit:
         try:
             subreddit = await reddit.subreddit(subreddit_name)
             top_posts = subreddit.top('day', limit=100)
