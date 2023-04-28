@@ -1,12 +1,43 @@
-# Redbook
-Facebook modules for posting automation
+# Redbook: Facebook Automation Modules
 
-These are some functions I wrote to complete automated tasks for a Facebook business page. 
-The modules provided will post images stored in a database, or quotes. You can set these on a time loop or schedule.
-There are functions that will collect all posts on your Facebook page and store them locally to the database. 
-This can be used to by pass using Facebook webhooks which are fully stricted from production use until you get your applican and business approved. 
-The modules will also scan the post for comments and index them into a comments table which can then be iterated through for automatic replies.
-One of the functions creates generates automatic replies by taking the users inputted text and sending it to the OpenAI ChatGTP completion engine which will generate a response. 
-User questions are filtered by a user placing [Image] or [Question] before the text prompts. Images requests are processed using DallE API.
+Redbook is a collection of functions designed to automate various tasks for a Facebook business page. These modules allow you to automatically post images or quotes stored in a database at scheduled intervals or using a time loop. Additionally, the modules can collect all posts from your Facebook page and store them locally in a database, bypassing the need for Facebook webhooks, which have strict production usage limitations until your application and business are approved. The modules also scan posts for comments, indexing them into a comments table that can be used for automatic replies.
 
-For environment variables you will need to copy or create a .env file like the example.env provided and place your api keys and other settings within the file for the variables to be properly loaded.
+## Function Overview and Use Cases
+
+1. **Post images and quotes:** Schedule or set up a time loop to automatically post images and quotes from your database to your Facebook business page.
+
+2. **Collect and store posts:** Retrieve all posts from your Facebook page and save them to a local database, allowing you to avoid using Facebook webhooks with strict production usage limitations.
+
+3. **Index and reply to comments:** Scan the posts for comments, index them into a comments table, and iterate through them to generate automatic replies.
+
+4. **Generate automatic replies with OpenAI ChatGPT:** Send user-inputted text to the OpenAI ChatGPT completion engine to generate a response. User questions are filtered by adding [Image] or [Question] before the text prompts. Image requests are processed using the DallE API.
+
+## Environment Variables Setup
+
+To set up the environment variables, you need to create or copy a `.env` file based on the provided `example.env`. Fill in the appropriate API keys and other settings to ensure the variables are loaded correctly.
+
+## Functions and Use Cases
+
+### Function 1: Post images and quotes
+
+This function enables you to post images or quotes stored in a database to your Facebook business page at scheduled intervals or using a time loop.
+
+**Use case:** Automate the process of posting images or quotes to your Facebook page, saving time and ensuring consistent content updates.
+
+### Function 2: Collect and store posts
+
+Retrieve all posts from your Facebook page and save them locally in a database, bypassing the need for Facebook webhooks.
+
+**Use case:** Collect and store post data without relying on Facebook webhooks, which have production usage limitations.
+
+### Function 3: Index and reply to comments
+
+Scan the posts for comments, index them into a comments table, and iterate through them to generate automatic replies.
+
+**Use case:** Efficiently manage user comments and provide timely responses to user inquiries or feedback.
+
+### Function 4: Generate automatic replies with OpenAI ChatGPT
+
+Send user-inputted text to the OpenAI ChatGPT completion engine to generate a response. Filter user questions by adding [Image] or [Question] before the text prompts. Process image requests using the DallE API.
+
+**Use case:** Provide quick and relevant responses to user questions, improving user engagement and satisfaction.
