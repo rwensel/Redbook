@@ -1,5 +1,6 @@
 import sqlite3
 import time
+
 from dblogging import log_to_database
 
 
@@ -57,7 +58,7 @@ def create_tables(database_name):
 
         # Add a log entry for errors
         log_to_database(database_name, 'ERROR', f'Error in create_tables: {str(e)}', 'create_tables')
-        
+
     #  Create quotes table
     try:
         c.execute('''

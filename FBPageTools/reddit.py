@@ -1,14 +1,14 @@
-import sqlite3
-import time
-from dblogging import log_to_database
 import imghdr
-import os
 import sqlite3
 import time
-import asyncpraw
-import aiohttp
 
-async def process_subreddit(database_name,subreddit_name,reddit_user_agent,reddit_client_id,reddit_client_secret):
+import aiohttp
+import asyncpraw
+
+from dblogging import log_to_database
+
+
+async def process_subreddit(database_name, subreddit_name, reddit_user_agent, reddit_client_id, reddit_client_secret):
     conn = sqlite3.connect(database_name)
     c = conn.cursor()
 
@@ -32,13 +32,17 @@ async def process_subreddit(database_name,subreddit_name,reddit_user_agent,reddi
                                     if imghdr.what(None, h=await response.read()) is not None:
                                         filtered_posts.append(post)
                                     else:
-                                        log_to_database(c, "WARNING", f"Could not detect image format for post {post.id}", "process_subreddit")
+                                        log_to_database(c, "WARNING",
+                                                        f"Could not detect image format for post {post.id}",
+                                                        "process_subreddit")
                         except Exception as e:
-                            log_to_database(c, "WARNING", f"Could not download image for post {post.id}: {e}", "process_subreddit")
+                            log_to_database(c, "WARNING", f"Could not download image for post {post.id}: {e}",
+                                            "process_subreddit")
                     else:
                         log_to_database(c, "WARNING", f"Post {post.id} is not an image file", "process_subreddit")
         except Exception as e:
-            log_to_database(c, "ERROR", f"Error retrieving top posts from subreddit {subreddit_name}: {e}", "process_subreddit")
+            log_to_database(c, "ERROR", f"Error retrieving top posts from subreddit {subreddit_name}: {e}",
+                            "process_subreddit")
             filtered_posts = []
 
         # save post metadata into a local sqlite db
@@ -52,8 +56,10 @@ async def process_subreddit(database_name,subreddit_name,reddit_user_agent,reddi
                               int(time.time()), 0))
 
             conn.commit()
-            log_to_database(c, "INFO", f"Saved post metadata to database for subreddit {subreddit_name}", "process_subreddit")
+            log_to_database(c, "INFO", f"Saved post metadata to database for subreddit {subreddit_name}",
+                            "process_subreddit")
         except Exception as e:
-            log_to_database(c, "ERROR", f"Error saving post metadata to database for subreddit {subreddit_name}: {e}", "process_subreddit")
+            log_to_database(c, "ERROR", f"Error saving post metadata to database for subreddit {subreddit_name}: {e}",
+                            "process_subreddit")
 
     conn.close()

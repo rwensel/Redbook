@@ -1,11 +1,13 @@
 import re
 import sqlite3
 import time
-from dblogging import log_to_database
-import openai
+
 import facebook
+import openai
 import requests
+
 from database import update_table_post_status
+from dblogging import log_to_database
 
 
 # ============================
@@ -430,8 +432,6 @@ def post_to_facebook(database_name, access_token, table):
     log_to_database(database_name, 'DEBUG', 'Exiting post_to_facebook function', 'post_to_facebook')
 
 
-
-
 # ============================
 # Function: remove_dev_posts
 # ============================
@@ -463,7 +463,6 @@ def remove_dev_posts(database_name, page_id, access_token, regex_pattern):
 
             # Check if the post contains a message and if the message matches the regex pattern
             if 'message' in post and re.search(regex_pattern, post['message'], re.IGNORECASE):
-                
                 # Delete the post from the page
                 graph.delete_object(post['id'])
                 log_to_database(database_name, 'INFO', f'Deleted post with ID: {post["id"]}', 'remove_dev_posts')
