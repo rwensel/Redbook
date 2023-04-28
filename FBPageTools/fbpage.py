@@ -6,8 +6,8 @@ import facebook
 import openai
 import requests
 
-from database import update_table_post_status
-from dblogging import log_to_database
+from .dbapp import update_table_post_status
+from .dblogging import log_to_database
 
 
 # ============================

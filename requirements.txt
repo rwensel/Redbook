@@ -47,3 +47,4 @@ typing_extensions==4.5.0
 update-checker==0.18.0
 urllib3==1.26.15
 yarl==1.9.2
+praw~=7.7.0
