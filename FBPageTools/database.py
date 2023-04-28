@@ -41,6 +41,23 @@ def create_tables(database_name):
     #  Add a log entry for function entry
     log_to_database(database_name, 'DEBUG', 'Entering create_tables function', 'create_tables')
 
+    #  Create memes table
+    try:
+        c.execute('''CREATE TABLE IF NOT EXISTS posts
+                            (id TEXT PRIMARY KEY,
+                            permalink TEXT,
+                            title TEXT,
+                            author TEXT,
+                            ups INTEGER,
+                            created_utc INTEGER,
+                            image_link TEXT,
+                            indexed_time INTEGER,
+                            posted INTEGER)''')
+    except Exception as e:
+
+        # Add a log entry for errors
+        log_to_database(database_name, 'ERROR', f'Error in create_tables: {str(e)}', 'create_tables')
+        
     #  Create quotes table
     try:
         c.execute('''

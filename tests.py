@@ -13,7 +13,7 @@ REDDIT_CLIENT_ID= os.getenv('REDDIT_CLIENT_ID')
 REDDIT_CLIENT_SECRET= os.getenv('REDDIT_CLIENT_SECRET')
 REDDIT_USER_AGENT= os.getenv('REDDIT_USER_AGENT')
 
-subreddit_name=[]
+subreddit_name=['meme', 'me_irl', 'funny', 'ProgrammerHumor', 'starterpacks']
 
 rddt.process_subreddit(DATABASE_NAME,subreddit_name,REDDIT_USER_AGENT,REDDIT_CLIENT_ID,REDDIT_CLIENT_SECRET)
 fb.create_tables(DATABASE_NAME)
