@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from FBPageTools import fbpage as fb
 from FBPageTools import reddit as rddt
+
 # Load environment variables
 load_dotenv()
 FACEBOOK_ACCESS_TOKEN = os.getenv('FACEBOOK_PAGE_TOKEN')

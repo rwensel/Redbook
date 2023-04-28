@@ -1,10 +1,3 @@
 /.env
-/logs/memebot.log
-/logs/quotebot.log
-/logs/reddit.log
-/files/selected_quotes.txt
-/db/posts.db
-/archive
-/archive/
-/venv
+/db/app.db
 /venv/
