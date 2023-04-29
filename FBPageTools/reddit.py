@@ -6,7 +6,7 @@ import time
 import aiohttp
 import asyncpraw
 
-from .dbapp import log_to_database
+from .dblogging import log_to_database
 
 
 async def process_subreddit(database_name, subreddit_name, reddit_user_agent, reddit_client_id, reddit_client_secret):
