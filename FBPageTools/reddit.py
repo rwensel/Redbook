@@ -76,7 +76,7 @@ async def process_subreddit(database_name, subreddit_name, reddit_user_agent, re
                               post.url,
                               int(time.time()),
                               0,
-                              '')),
+                              None)),
 
 
             except Exception as e:
