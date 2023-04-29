@@ -10,6 +10,20 @@ from .dblogging import log_to_database
 
 
 async def process_subreddit(database_name, subreddit_name, reddit_user_agent, reddit_client_id, reddit_client_secret):
+    """
+        Check sub reddit for new posts and indexes them into a db if they meet filtered
+        requirements.
+
+        Parameters:
+            database_name (str): Path to the application db.
+            subreddit_name (str): Iterated subreddit name
+            reddit_user_agent (str): UserAgent info to report back to reddit api.
+            reddit_client_id (str): Reddit API application ID.
+            reddit_client_secret (str): Reddit API Access Key
+        Returns:
+            None
+        """
+
     # Add a log entry for function entry
     log_to_database(database_name, 'DEBUG', 'Entering process_subreddit function', 'process_subreddit')
 
@@ -74,7 +88,21 @@ async def process_subreddit(database_name, subreddit_name, reddit_user_agent, re
 
 
 async def main_loop_reddit(database_name, reddit_user_agent, reddit_client_id, reddit_client_secret):
+    """
+           Iterates through subreddit list using process_subreddit.
+
+           Parameters:
+               database_name (str): Path to the application db.
+               reddit_user_agent (str): UserAgent info to report back to reddit api.
+               reddit_client_id (str): Reddit API application ID.
+               reddit_client_secret (str): Reddit API Access Key
+           Returns:
+               None
+           """
+
+    # Place the subreddits in which you want to check for posts within this list
     subreddit_names = ['meme', 'me_irl', 'funny', 'ProgrammerHumor', 'starterpacks']
+
     while True:
         tasks = [
             process_subreddit(database_name, subreddit_name, reddit_user_agent, reddit_client_id, reddit_client_secret)
