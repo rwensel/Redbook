@@ -1,7 +1,7 @@
 import asyncio
 import os
 from dotenv import load_dotenv
-from FBPageTools.reddit import process_subreddit
+from FBPageTools.reddit import main_loop_reddit
 
 # Load environment variables
 load_dotenv()
@@ -13,11 +13,9 @@ MODEL_ENGINE = os.getenv('MODEL_ENGINE')
 REDDIT_CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
 REDDIT_CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
 REDDIT_USER_AGENT = os.getenv('REDDIT_USER_AGENT')
-SUBREDDIT_NAMES = ['meme', 'me_irl', 'funny', 'ProgrammerHumor', 'starterpacks']
 
 if __name__ == '__main__':
-    [process_subreddit(DATABASE_NAME, SUBREDDIT_NAMES, REDDIT_USER_AGENT, REDDIT_CLIENT_SECRET, REDDIT_CLIENT_ID) for
-     subreddit_name in SUBREDDIT_NAMES]
+    asyncio.run(main_loop_reddit(DATABASE_NAME, REDDIT_USER_AGENT, REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET))
     # fb.create_tables(DATABASE_NAME)
     # fb.post_to_facebook(DATABASE_NAME, FACEBOOK_ACCESS_TOKEN, 'quotes')
     # fb.post_to_facebook(DATABASE_NAME, FACEBOOK_ACCESS_TOKEN, 'memes')
